@@ -1,0 +1,11 @@
+Van_ID,Make_Model_Year,TotalCapacity,Vehicle_type,WC,STR,Vehicle_Start_Time,Vehicle_End_Time,"Vehicle_Location(Lat, Long)",Driver_Name
+2,Comp Van,1,STS,0,1,06:00,14:00,"44.0641,-92.4244",Mike
+17,Van #16,2,WC,2,0,06:00,14:00,"44.0641,-92.4244",Martin
+34,Company,1,WC,1,0,06:00,14:00,"44.0641,-92.4244",Sam
+35,Van #3,1,WC,1,0,06:00,14:00,"44.0641,-92.4244",Ali
+36,Van #4,2,STS,0,2,06:00,14:00,"44.0641,-92.4244",Floyd
+37,Van #37,1,WC,1,0,06:00,14:00,"44.0641,-92.4244",May
+38,Van #8,1,WC,1,0,09:00,17:00,"44.0641,-92.4244",Smith
+39,Van #9,2,WC,2,0,09:00,17:00,"44.0641,-92.4244",Will
+40,Van #46,2,CC,0,0,09:00,17:00,"44.0641,-92.4244",rome
+42,Van #30,1,WC,1,0,09:00,17:00,"44.0641,-92.4244",alex
