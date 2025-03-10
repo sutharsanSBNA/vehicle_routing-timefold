@@ -76,6 +76,7 @@ class Visit(JsonDomainBase):
         return max(self.arrival_time, self.min_start_time) + self.service_duration
 
 
+    @computed_field
     @property
     def vehicle_name(self) -> Optional[str]:
         """Returns the name of the assigned vehicle, if any."""

@@ -36,7 +36,7 @@ async def get_route(problem_id: str) -> VehicleRoutePlan:
     })
 
 @app.get("/output", response_model_exclude_none=True)
-async def get_output_data(input: dict) -> VehicleRoutePlan:
+async def get_output_data(input: dict):
     print(input)
     output = []
     
@@ -57,7 +57,7 @@ async def get_output_data(input: dict) -> VehicleRoutePlan:
             output.append({"TblId": trip_id,
                            "VehicleId": trip["vehicle"],
                            "DriverId": None,"IsAssigned":isassigned,"Exception":None,
-                           "Make_Model":trip["vehicle_name"],"ProgressId":input["ProgressId"]})
+                           "Make_Model":trip["vehicleName"],"ProgressId":input.get("ProgressId")})
     return {"data": output}
 
 def update_route(problem_id: str, route: VehicleRoutePlan):

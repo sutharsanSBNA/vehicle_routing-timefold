@@ -218,19 +218,25 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
     demands = ints(random, 1, 3 + 1)
     service_durations = values(random, SERVICE_DURATION_MINUTES)
 
+    VEHICLE_TYPES = ["WC", "CC", "STS"]
+    vehicle_types = values(random, VEHICLE_TYPES)
+
+    
     vehicles = [Vehicle(id=str(row["VehicleId"]),
                     # capacity=next(vehicle_capacities),
                     capacity=row["TotalCapacity"],
                     home_location=Location(
                         latitude=row["Vehicle_Location(Lat, Long)"].split(",")[0],
                         longitude=row["Vehicle_Location(Lat, Long)"].split(",")[1]),
-                    departure_time=datetime.strptime(row["Vehicle_Start_Time"], "%H:%M").replace(
-                        year=today.year, month=today.month, day=today.day),
+                    # departure_time=datetime.strptime(row["Vehicle_Start_Time"], "%H:%M").replace(
+                    #     year=today.year, month=today.month, day=today.day),
+                    departure_time=datetime.strptime("2025-02-26T07:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
                     # vehicle_type=random.choice(vehicle_type_list)
-                    vehicle_type=row["Vehicle_type"],
+                    # vehicle_type=row["Vehicle_type"],
+                    vehicle_type=next(vehicle_types),
                     make_model=row["Make_Model"]
                     )
-            for index, row in demo_data_enum["vehicles"]]
+            for index, row in enumerate(demo_data_enum["vehicles"])]
 
 
     # names = generate_names(random)
@@ -246,7 +252,7 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
         dropoff_id = f"dropoff_{trip_id}"
         trip_vehicle_type = trip["Mobility"]
 
-        visit_name = trip["name"]
+        # visit_name = trip["name"]
         pickup_time = datetime.strptime(trip["PickupTime"], "%Y-%m-%dT%H:%M:%SZ")
         dropoff_time = datetime.strptime(trip["DropTime"], "%Y-%m-%dT%H:%M:%SZ")
         
@@ -257,7 +263,7 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
         # pickup_time = datetime.combine(date.today() + timedelta(days=1), MORNING_WINDOW_START)
         pickup_visit = Visit(
             id=pickup_id,
-            name=f"Pickup {visit_name}",
+            name=f"Pickup {trip_id}",
             location=Location(latitude=trip["PickupLatitude"], longitude=trip["PickupLongitude"]),
             demand=next(demands),
             # min_start_time=datetime.combine(date.today() + timedelta(days=1), MORNING_WINDOW_START),
@@ -272,8 +278,8 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
 
         dropoff_visit = Visit(
             id=dropoff_id,
-            name=f"Dropoff {visit_name}",
-            location=Location(latitude=trip["DestinationLatitude"], longitude=trip["DestinationLongitude"]),
+            name=f"Dropoff {trip_id}",
+            location=Location(latitude=trip["DropLatitude"], longitude=trip["DropLongitude"]),
             demand=-pickup_visit.demand,  # Drop-off negates pickup demand
             min_start_time=dropoff_time,  # Ensures drop-off happens later
             max_end_time=dropoff_time + timedelta(minutes=30),
