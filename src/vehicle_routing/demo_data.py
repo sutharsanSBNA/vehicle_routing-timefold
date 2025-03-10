@@ -232,8 +232,8 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
                     #     year=today.year, month=today.month, day=today.day),
                     departure_time=datetime.strptime("2025-02-26T07:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
                     # vehicle_type=random.choice(vehicle_type_list)
-                    # vehicle_type=row["Vehicle_type"],
-                    vehicle_type=next(vehicle_types),
+                    vehicle_type=row["Vehicle_Type"],
+                    # vehicle_type=next(vehicle_types),
                     make_model=row["Make_Model"]
                     )
             for index, row in enumerate(demo_data_enum["vehicles"])]
