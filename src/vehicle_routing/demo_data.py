@@ -226,8 +226,8 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
                     # capacity=next(vehicle_capacities),
                     capacity=row["TotalCapacity"],
                     home_location=Location(
-                        latitude=row["Vehicle_Location(Lat, Long)"].split(",")[0],
-                        longitude=row["Vehicle_Location(Lat, Long)"].split(",")[1]),
+                        latitude=row["Vehicle_Location_Lat"],
+                        longitude=row["Vehicle_Location_Lon"]),
                     # departure_time=datetime.strptime(row["Vehicle_Start_Time"], "%H:%M").replace(
                     #     year=today.year, month=today.month, day=today.day),
                     departure_time=datetime.strptime("2025-02-26T07:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
