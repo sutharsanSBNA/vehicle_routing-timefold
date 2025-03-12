@@ -234,7 +234,8 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
                     # vehicle_type=random.choice(vehicle_type_list)
                     # vehicle_type=row["Vehicle_Type"],
                     vehicle_type=next(vehicle_types),
-                    make_model=row["Make_Model"]
+                    make_model=row["Make_Model"],
+                    driver_id=row["DriverId"]
                     )
             for index, row in enumerate(demo_data_enum["vehicles"])]
 

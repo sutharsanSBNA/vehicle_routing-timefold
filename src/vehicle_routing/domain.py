@@ -82,6 +82,11 @@ class Visit(JsonDomainBase):
         """Returns the name of the assigned vehicle, if any."""
         return self.vehicle.make_model if self.vehicle else None
     
+    @computed_field
+    @property
+    def driver_id(self) -> Optional[str]:
+        """Returns the name of the assigned vehicle, if any."""
+        return self.vehicle.driver_id if self.vehicle else None
 
     @computed_field
     @property
@@ -140,6 +145,7 @@ class Vehicle(JsonDomainBase):
                       IdListSerializer, VisitListValidator, Field(default_factory=list)]
     vehicle_type: str  # ✅ Added vehicle type constraint
     make_model: str
+    driver_id: str
 
     @computed_field
     @property

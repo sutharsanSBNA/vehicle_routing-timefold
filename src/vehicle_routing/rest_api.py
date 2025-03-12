@@ -56,7 +56,7 @@ async def get_output_data(input: dict):
 
             output.append({"TblId": trip_id,
                            "VehicleId": trip["vehicle"],
-                           "DriverId": None,"IsAssigned":isassigned,"Exception":None,
+                           "DriverId": trip["driver_id"],"IsAssigned":isassigned,"Exception":None,
                            "Make_Model":trip["vehicleName"],"ProgressId":input.get("ProgressId")})
     return {"data": output}
 
