@@ -22,20 +22,20 @@ async def demo_data_list():
 #     demo_data = generate_demo_data(getattr(DemoData, dataset_id))
 #     return demo_data
 
-@app.get("/demo-data/json", response_model_exclude_none=True)
+@app.post("/demo-data/json", response_model_exclude_none=True)
 async def get_demo_data(dataset_id: dict) -> VehicleRoutePlan:
     print(dataset_id)
     demo_data = generate_demo_data(dataset_id)
     return demo_data
 
-@app.get("/route-plans/{problem_id}", response_model_exclude_none=True)
+@app.post("/route-plans/{problem_id}", response_model_exclude_none=True)
 async def get_route(problem_id: str) -> VehicleRoutePlan:
     route = data_sets[problem_id]
     return route.model_copy(update={
         'solver_status': solver_manager.get_solver_status(problem_id),
     })
 
-@app.get("/output", response_model_exclude_none=True)
+@app.post("/output", response_model_exclude_none=True)
 async def get_output_data(input: dict):
     print(input)
     output = []
