@@ -60,7 +60,7 @@ async def get_output_data(input: dict):
             output.append({"TblId": trip_id,
                            "VehicleId": trip.get("vehicle"),
                            "DriverId": trip.get("driverId"),"IsAssigned":isassigned,"Exception":None,
-                           "Make_Model":trip["vehicleName"],"ProgressId":input.get("ProgressId")})
+                           "Make_Model":trip.get("vehicleName"),"ProgressId":input.get("ProgressId")})
     return {"data": output}
 
 def update_route(problem_id: str, route: VehicleRoutePlan):
