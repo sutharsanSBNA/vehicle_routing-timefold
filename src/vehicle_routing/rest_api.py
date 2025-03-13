@@ -54,9 +54,12 @@ async def get_output_data(input: dict):
             if "vehicle" not in pickup or "vehicle" not in dropoff:
                 isassigned = False
 
+            if not trip.get("vehicle"):
+                isassigned = False
+
             output.append({"TblId": trip_id,
-                           "VehicleId": trip["vehicle"],
-                           "DriverId": trip["driverId"],"IsAssigned":isassigned,"Exception":None,
+                           "VehicleId": trip.get("vehicle"),
+                           "DriverId": trip.get("driverId"),"IsAssigned":isassigned,"Exception":None,
                            "Make_Model":trip["vehicleName"],"ProgressId":input.get("ProgressId")})
     return {"data": output}
 
