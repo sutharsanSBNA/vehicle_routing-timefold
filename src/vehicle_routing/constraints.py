@@ -21,7 +21,7 @@ def define_constraints(factory: ConstraintFactory):
         # enforce_no_early_pickup(factory),  # ✅ Prevent pickups from being too early,
         # prioritize_dropoff_before_new_pickup(factory),
         enforce_valid_arrival_time(factory),
-
+        pickup_immediately_before_dropoff(factory) ,
 
         # force_dropoff_after_pickup(factory),
         use_more_vehicles(factory),
@@ -32,6 +32,17 @@ def define_constraints(factory: ConstraintFactory):
 ##############################################
 # Hard constraints
 ##############################################
+
+def pickup_immediately_before_dropoff(factory: ConstraintFactory):
+    return (factory.for_each(Visit)
+            .join(Visit, Joiners.equal(lambda visit: visit.paired_visit_id, lambda paired: paired.id))  # ✅ Match pickup to drop-off
+            .filter(lambda visit, paired: visit.vehicle is not None and paired.vehicle is not None)  # ✅ Ensure both visits have assigned vehicles
+            .filter(lambda visit, paired: visit.vehicle.id == paired.vehicle.id)  # ✅ Ensure same vehicle
+            .filter(lambda visit, paired: visit.next_visit is not None)  # ✅ Ensure there's a next visit
+            .filter(lambda visit, paired: visit.next_visit.id != paired.id)  # ❌ Ensure the next visit is the correct drop-off
+            .penalize(HardSoftScore.ONE_HARD, lambda visit, paired: 100_000)  # ✅ Extreme penalty
+            .as_constraint("pickupImmediatelyBeforeDropoff"))
+
 
 def use_more_vehicles(factory: ConstraintFactory):
     return (factory.for_each(Vehicle)

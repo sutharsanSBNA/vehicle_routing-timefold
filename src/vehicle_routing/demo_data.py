@@ -228,6 +228,8 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
                     home_location=Location(
                         latitude=row["Vehicle_Location_Lat"],
                         longitude=row["Vehicle_Location_Lon"]),
+                        # latitude=row["Vehicle_Location(Lat, Long)"].split(",")[0],
+                        # longitude=row["Vehicle_Location(Lat, Long)"].split(",")[1]),
                     # departure_time=datetime.strptime(row["Vehicle_Start_Time"], "%H:%M").replace(
                     #     year=today.year, month=today.month, day=today.day),
                     departure_time=datetime.strptime("2025-02-26T07:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
@@ -265,6 +267,7 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
         pickup_visit = Visit(
             id=pickup_id,
             name=f"Pickup {trip_id}",
+            trip_id=trip_id,
             location=Location(latitude=trip["PickupLatitude"], longitude=trip["PickupLongitude"]),
             demand=next(demands),
             # min_start_time=datetime.combine(date.today() + timedelta(days=1), MORNING_WINDOW_START),
@@ -280,6 +283,7 @@ def generate_demo_data(demo_data_enum: DemoData) -> VehicleRoutePlan:
         dropoff_visit = Visit(
             id=dropoff_id,
             name=f"Dropoff {trip_id}",
+            trip_id=trip_id,
             location=Location(latitude=trip["DropLatitude"], longitude=trip["DropLongitude"]),
             demand=-pickup_visit.demand,  # Drop-off negates pickup demand
             min_start_time=dropoff_time,  # Ensures drop-off happens later

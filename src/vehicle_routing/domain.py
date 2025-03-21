@@ -34,6 +34,7 @@ class Location(JsonDomainBase):
 class Visit(JsonDomainBase):
     id: Annotated[str, PlanningId]
     name: str
+    trip_id: str
     location: Annotated[Location, LocationSerializer, LocationValidator]
     demand: int
     min_start_time: datetime
